@@ -1,0 +1,104 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
+contract NFTTrade {
+
+    struct TradeOffer {
+        address proposer;
+        address recipient;
+        uint256 proposerTokenId;
+        uint256 requestedTokenId;
+        uint256 timestamp;
+        bool isActive;
+    }
+
+
+    uint256 public offerDuration = 1 days;
+    IERC721 public nftContract;
+
+    mapping(uint256 => TradeOffer) public offers;
+
+    event TradeOfferCreated(address indexed proposer, address indexed recipient, uint256 indexed proposerTokenId, uint256 timestamp);
+    event TradeOfferAccepted(address indexed proposer, address indexed recipient, uint256 indexed proposerTokenId, uint256 recipientTokenId);
+    event TradeOfferCancelled(address indexed proposer, uint256 indexed proposerTokenId);
+    event TradeDeclined(address indexed proposer, uint256 indexed proposerTokenId);
+
+    constructor(address _nftContract) {
+        nftContract = IERC721(_nftContract);
+    }
+
+    function createTradeOffer(address _recipient, uint256 _proposerTokenId, uint256 _requestedTokenId) external {
+        require(nftContract.ownerOf(_proposerTokenId) == msg.sender, "You don't own this token");
+        require(nftContract.getApproved(_proposerTokenId) == address(this), "Contract not approved");
+
+        offers[_proposerTokenId] = TradeOffer({
+            proposer: msg.sender,
+            recipient: _recipient,
+            proposerTokenId: _proposerTokenId,
+            requestedTokenId: _requestedTokenId,
+            timestamp: block.timestamp,
+            isActive: true
+        });
+
+        emit TradeOfferCreated(msg.sender, _recipient, _proposerTokenId, block.timestamp);
+    }
+
+
+    function acceptTrade(uint256 _proposerTokenId, uint256 _recipientTokenId) external {
+        TradeOffer storage offer = offers[_proposerTokenId];
+
+        require(offer.isActive, "Trade offer not active");
+        require(offer.recipient == msg.sender, "You are not the recipient");
+        require(block.timestamp <= offer.timestamp + offerDuration, "Offer expired");
+
+        require(nftContract.ownerOf(_recipientTokenId) == msg.sender, "You don't own the recipient token");
+        require(nftContract.getApproved(_recipientTokenId) == address(this), "Contract not approved");
+
+        // Swap NFTs
+        nftContract.safeTransferFrom(offer.proposer, msg.sender, _proposerTokenId);
+        nftContract.safeTransferFrom(msg.sender, offer.proposer, _recipientTokenId);
+
+        offer.isActive = false;
+
+        emit TradeOfferAccepted(offer.proposer, msg.sender, _proposerTokenId, _recipientTokenId);
+    }
+
+    function cancelTrade(uint256 _proposerTokenId) external {
+        TradeOffer storage offer = offers[_proposerTokenId];
+        require(offer.proposer == msg.sender, "Not your offer");
+
+        offer.isActive = false;
+        emit TradeOfferCancelled(msg.sender, _proposerTokenId);
+    }
+
+    function declineTrade(uint256 _proposerTokenId) external {
+        TradeOffer storage offer = offers[_proposerTokenId];
+        require(offer.recipient == msg.sender, "You are not the recipient");
+        require(offer.isActive, "Offer is not active");
+
+        offer.isActive = false;
+        emit TradeDeclined(msg.sender, _proposerTokenId);
+    }
+
+    function getTradeOffer(uint256 _proposerTokenId) external view returns (
+        address proposer,
+        address recipient,
+        uint256 proposerTokenId,
+        uint256 requestedTokenId,
+        uint256 timestamp,
+        bool isActive
+    )
+    {
+        TradeOffer storage offer = offers[_proposerTokenId];
+        return (
+            offer.proposer,
+            offer.recipient,
+            offer.proposerTokenId,
+            offer.requestedTokenId,
+            offer.timestamp,
+            offer.isActive
+        );
+    }
+}

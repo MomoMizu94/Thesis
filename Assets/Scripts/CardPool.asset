@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e64f78b689dee3aebc56848a720db34, type: 3}
+  m_Name: CardPool
+  m_EditorClassIdentifier: 
+  nftCards:
+  - name: Frostbane, Herald of Winter
+    description: Born from the heart of a glacier, Frostbane commands blizzards with
+      a whisper. Its chilling breath can freeze time itself.
+    attack: 90
+    health: 180
+    mana: 8
+    imageURI: https://bafybeidy4necs2vgrycb6zxlzabyvnrkx5dnyjaha4jv6denamdbreybxy.ipfs.dweb.link?filename=Dragon.png
+  - name: Sylthara, Winter's Grace
+    description: With wings of crystal frost and a soul untouched by time, Sylthara
+      weaves serenity through snow. Her breath mends wounds and calms storms.
+    attack: 60
+    health: 220
+    mana: 6
+    imageURI: https://bafybeidy4necs2vgrycb6zxlzabyvnrkx5dnyjaha4jv6denamdbreybxy.ipfs.dweb.link?filename=Dragon.png
+  - name: Sir Aldric, Vowkeeper of the Iron Oath
+    description: "A stalwart defender of the realm, Sir Aldric\u2019s blade is as
+      unyielding as his honor. With each swing, he strikes for justice, his shield
+      a barrier against darkness."
+    attack: 70
+    health: 140
+    mana: 4
+    imageURI: https://bafybeihyxwy62miw6yg4z7rqvrcjoawf7mljf2oinlvnrrk6dqd7a35tkm.ipfs.dweb.link?filename=Knight.png
+  - name: Darius Blackthorn, Knight of the Shattered Dawn
+    description: Bound by a cursed oath, Darius wields his dark steel with merciless
+      precision. His presence chills the air, and his shadow heralds doom, for he
+      serves only the forgotten gods of war.
+    attack: 80
+    health: 120
+    mana: 5
+    imageURI: https://bafybeihyxwy62miw6yg4z7rqvrcjoawf7mljf2oinlvnrrk6dqd7a35tkm.ipfs.dweb.link?filename=Knight.png
+  - name: Grubblin, the Sneaky Tinkerer
+    description: "With a bag full of gadgets and a grin full of tricks, Grubblin
+      thrives in chaos. He\u2019s always got a nasty surprise tucked away\u2014or
+      a scam to pull, if you\u2019re not careful."
+    attack: 40
+    health: 90
+    mana: 2
+    imageURI: https://bafybeifc7doponfxn6tcyft6y5nlu54gdh7tiakozfgbwpltesm4dp5m2e.ipfs.dweb.link?filename=Goblin.png
+  - name: Zarvok the Emberweaver
+    description: "Feeding on the chaos of flames, Zarvok\u2019s twisted spells scorch
+      the earth and minds alike. His cackling laughter is drowned out only by the
+      crackle of fire, and his wrath burns hotter than any inferno."
+    attack: 90
+    health: 60
+    mana: 4
+    imageURI: https://bafybeifc7doponfxn6tcyft6y5nlu54gdh7tiakozfgbwpltesm4dp5m2e.ipfs.dweb.link?filename=Goblin.png
+  - name: Morganna, the Nightshade Enchantress
+    description: With eyes that see through the veil of time, Morganna weaves curses
+      and whispers secrets from the shadows. Her potions are as deadly as her charm,
+      and her loyalty is as fickle as the moon.
+    attack: 40
+    health: 80
+    mana: 2
+    imageURI: https://bafybeiguzs4recxmkn25l2f62ktduolumwf3wx2iartfbk5y6t73v3vlqi.ipfs.dweb.link?filename=Witch.png
+  - name: Lilith, Mistress of the Void
+    description: "Drawing her power from the forgotten abyss, Lilith commands shadows
+      and storms with a flick of her hand. Her mere presence warps reality, and her
+      magic is as boundless as it is destructive\u2014no soul is beyond her reach."
+    attack: 120
+    health: 80
+    mana: 7
+    imageURI: https://bafybeiguzs4recxmkn25l2f62ktduolumwf3wx2iartfbk5y6t73v3vlqi.ipfs.dweb.link?filename=Witch.png
